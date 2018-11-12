@@ -1,0 +1,12 @@
+li > ul {
+    display: none;
+}
+a.arrow::before {
+    content: "🔽";
+  }
+ul {
+    list-style: none;
+}
+a.arrow.expanded::before {
+    content: "🔼";
+  }

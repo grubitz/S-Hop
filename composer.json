@@ -1,0 +1,14 @@
+{
+    "name": "bort/s-hop",
+    "description": "categories-tree",
+    "type": "projeect",
+    "license": "MIT",
+    "require": {
+        "fzaninotto/faker": "^1.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "Faker\\": "vendor/fzaninotto/faker/src/Faker/"
+        }
+    }
+}
