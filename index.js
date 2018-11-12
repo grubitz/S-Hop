@@ -1,7 +1,7 @@
 $(function () {
 
     $( ".arrow" ).click(function() {
-        $(this).next("ul").toggle();
+        $(this).parent().find(">ul").toggle();
         $(this).toggleClass("expanded");
     });
 

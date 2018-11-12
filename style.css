@@ -11,6 +11,6 @@ a.arrow.expanded::before {
     content: "🔼";
   }
 
-.diamond::before {
+a.diamond::before {
     content: "🔶";
 }
