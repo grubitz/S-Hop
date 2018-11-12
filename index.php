@@ -34,8 +34,6 @@ function createTree(&$list, $parent)
     return $tree;
 }
 
-// print_r($tree);
-
 function printTree($branch)
 {
     echo '<ul>';
@@ -50,7 +48,6 @@ function printTree($branch)
     }
     echo '</ul>';
 }
-
 
 ?>
 
