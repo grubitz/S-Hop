@@ -10,3 +10,7 @@ ul {
 a.arrow.expanded::before {
     content: "🔼";
   }
+
+.diamond::before {
+    content: "🔶";
+}

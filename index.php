@@ -41,9 +41,7 @@ function printTree($branch)
     echo '<ul>';
     foreach ($branch as $twig) {
         echo '<li>';
-        if (count($twig['children'])) {
-            echo '<a class="arrow"></a>';
-        }
+        echo '<a class="' . (count($twig['children']) ? 'arrow' : 'diamond') . '"></a>';
         echo $twig['name'];
         if (count($twig['children'])) {
             printTree($twig['children']);
