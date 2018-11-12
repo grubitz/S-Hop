@@ -8,7 +8,11 @@ $db = new PDO('mysql:dbname=s_hop;host=localhost', 'debian-sys-maint', '0S2cpSOs
 $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+$db->query("SET FOREIGN_KEY_CHECKS=0");
 $db->query("TRUNCATE TABLE categories");
+$db->query("TRUNCATE TABLE products");
+$db->query("SET FOREIGN_KEY_CHECKS=1");
+
 
 for ($i = 0; $i < 10; $i++) {
     $companyName = $faker->company;
@@ -39,5 +43,23 @@ for ($i = 0; $i < 100; $i++) {
     $statement = $db->prepare($query);
     $statement->bindValue(':name', $companyName);
     $statement->bindValue(':parentID', $randID);
+    $statement->execute();
+}
+
+$categoryIds = $db->query("SELECT id FROM categories")->fetchAll();
+
+for ($i = 0; $i < 5000; $i++) {
+    $productName = $faker->name;
+    $productPrice = mt_rand(5, 200000);
+    $productCode = $faker->isbn10;
+    $productCategoryId = $categoryIds[mt_rand(0, count($categoryIds)-1)]['id'];
+
+    $query = "INSERT INTO products (name, price, product_code, category_id) VALUES (:name, :price, :product_code, :category_id)";
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':name', $productName);
+    $statement->bindValue(':price', $productPrice);
+    $statement->bindValue(':product_code', $productCode);
+    $statement->bindValue(':category_id', $productCategoryId);
     $statement->execute();
 }
