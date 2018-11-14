@@ -3,40 +3,14 @@ require 'vendor/autoload.php';
 
 use Grubitz\Database;
 use Symfony\Component\Dotenv\Dotenv;
+use Grubitz\Category;
 
 $dotenv = new Dotenv();
 $dotenv->load(__DIR__.'/.env');
 
 $db = new Database();
 
-$result = $db->query("SELECT * FROM categories ORDER BY parent_category_id, name");
-
-$categories = $result->fetchAll();
-
-$catgoriesByParentID = [];
-$rootCategories = [];
-foreach ($categories as $category) {
-    if (!isset($category['parent_category_id'])) {
-        $rootCategories[] = $category;
-    } else {
-        $catgoriesByParentID[$category['parent_category_id']][] = $category;
-    }
-}
-
-$tree = createTree($catgoriesByParentID, $rootCategories);
-
-function createTree(&$list, $parent)
-{
-    $tree = [];
-    foreach ($parent as $category) {
-        $category['children'] = [];
-        if (isset($list[$category['id']])) {
-            $category['children'] = createTree($list, $list[$category['id']]);
-        }
-        $tree[] = $category;
-    }
-    return $tree;
-}
+$tree = Category::getTree();
 
 function printTree($branch)
 {
