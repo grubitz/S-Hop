@@ -38,15 +38,15 @@ function printTree($branch)
 {
     echo '<ul>';
     foreach ($branch as $twig) {
-        echo '<li>';
-        echo '<a class="' . (count($twig['children']) ? 'arrow' : 'diamond') . '"></a>';
+        echo '<li data-category-id="' . $twig['id'] . '">';
+        echo '<a class="category-toggle ' . (count($twig['children']) ? 'arrow' : 'diamond') . '"></a>';
         echo "<a href='/c/{$twig['id']}'>{$twig['name']}</a>";
         if (count($twig['children'])) {
             printTree($twig['children']);
         }
         echo '</li>';
     }
-    echo '</ul>';
+    echo "</ul>\n";
 }
 
 // / - strona glowna
@@ -60,7 +60,7 @@ if (preg_match('#^/c/([1-9][0-9]*)$#', $_SERVER['REQUEST_URI'], $matches)) {
     $statement->execute();
     $products = $statement->fetchAll();
 
-    $statement = $db->prepare("SELECT name FROM categories WHERE id=:categoryId");
+    $statement = $db->prepare("SELECT id, name FROM categories WHERE id=:categoryId");
     $statement->bindValue(':categoryId', $categoryId);
     $statement->execute();
     $category = $statement->fetch();
@@ -82,6 +82,11 @@ if (preg_match('#^/c/([1-9][0-9]*)$#', $_SERVER['REQUEST_URI'], $matches)) {
     <meta charset="UTF-8">
     <title>S-hop</title>
     <link href="/style.css" rel="stylesheet">
+    <?php
+        if (isset($products)) {
+            echo "<meta name='category-id' content='{$category['id']}'/>";
+        }
+    ?>
   </head>
   <body>
   <?php
