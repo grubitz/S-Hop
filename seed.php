@@ -1,12 +1,15 @@
 <?php
 require 'vendor/autoload.php';
 
+use Grubitz\Database;
+use Symfony\Component\Dotenv\Dotenv;
+
+$dotenv = new Dotenv();
+$dotenv->load(__DIR__.'/.env');
+
+$db = new Database();
+
 $faker = Faker\Factory::create();
-
-
-$db = new PDO('mysql:dbname=s_hop;host=localhost', 'debian-sys-maint', '0S2cpSOspNd1gBUC');
-$db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 $db->query("SET FOREIGN_KEY_CHECKS=0");
 $db->query("TRUNCATE TABLE categories");

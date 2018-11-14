@@ -8,7 +8,10 @@
     },
     "autoload": {
         "psr-4": {
-            "Faker\\": "vendor/fzaninotto/faker/src/Faker/"
+            "Grubitz\\": "src/"
         }
+    },
+    "require-dev": {
+        "symfony/dotenv": "^4.1"
     }
 }

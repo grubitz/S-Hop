@@ -1,9 +1,13 @@
 <?php
 require 'vendor/autoload.php';
 
-$db = new PDO('mysql:dbname=s_hop;host=localhost', 'debian-sys-maint', '0S2cpSOspNd1gBUC');
-$db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+use Grubitz\Database;
+use Symfony\Component\Dotenv\Dotenv;
+
+$dotenv = new Dotenv();
+$dotenv->load(__DIR__.'/.env');
+
+$db = new Database();
 
 $result = $db->query("SELECT * FROM categories ORDER BY parent_category_id, name");
 
