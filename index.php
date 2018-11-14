@@ -4,6 +4,7 @@ require 'vendor/autoload.php';
 use Grubitz\Database;
 use Symfony\Component\Dotenv\Dotenv;
 use Grubitz\Category;
+use Grubitz\Product;
 
 $dotenv = new Dotenv();
 $dotenv->load(__DIR__.'/.env');
@@ -27,30 +28,17 @@ function printTree($branch)
     echo "</ul>\n";
 }
 
-// / - strona glowna
-// /c/:category_id
-
-
 if (preg_match('#^/c/([1-9][0-9]*)$#', $_SERVER['REQUEST_URI'], $matches)) {
-    $categoryId=$matches[1];
-    $statement = $db->prepare("SELECT * FROM products WHERE category_id=:categoryId");
-    $statement->bindValue(':categoryId', $categoryId);
-    $statement->execute();
-    $products = $statement->fetchAll();
+    $categoryId = $matches[1];
 
-    $statement = $db->prepare("SELECT id, name FROM categories WHERE id=:categoryId");
-    $statement->bindValue(':categoryId', $categoryId);
-    $statement->execute();
-    $category = $statement->fetch();
+    $products = Product::getProductsByCategoryId($categoryId);
+    $category = Category::getById($categoryId);
 } elseif (preg_match('#^/$#', $_SERVER['REQUEST_URI'])) {
     //strona glowna
 } else {
     header('Content-type: text/plain', true, 404);
     die('error 404 not found');
 }
-
-// print_r($dupa);
-// print_r($_SERVER);
 
 ?>
 

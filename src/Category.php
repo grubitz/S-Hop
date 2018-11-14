@@ -37,4 +37,15 @@ class Category
 
         return createTree($catgoriesByParentID, $rootCategories);
     }
+
+    public static function getById($categoryId)
+    {
+        $db = new Database();
+
+        $statement = $db->prepare("SELECT id, name FROM categories WHERE id=:categoryId");
+        $statement->bindValue(':categoryId', $categoryId);
+        $statement->execute();
+
+        return $statement->fetch();
+    }
 }
