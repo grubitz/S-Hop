@@ -22,20 +22,7 @@ class Category
             }
         }
 
-        function createTree(&$list, $parent)
-        {
-            $tree = [];
-            foreach ($parent as $category) {
-                $category['children'] = [];
-                if (isset($list[$category['id']])) {
-                    $category['children'] = createTree($list, $list[$category['id']]);
-                }
-                $tree[] = $category;
-            }
-            return $tree;
-        }
-
-        return createTree($catgoriesByParentID, $rootCategories);
+        return self::createTree($catgoriesByParentID, $rootCategories);
     }
 
     public static function getById($categoryId)
@@ -47,5 +34,18 @@ class Category
         $statement->execute();
 
         return $statement->fetch();
+    }
+
+    private static function createTree(&$list, $parent)
+    {
+        $tree = [];
+        foreach ($parent as $category) {
+            $category['children'] = [];
+            if (isset($list[$category['id']])) {
+                $category['children'] = self::createTree($list, $list[$category['id']]);
+            }
+            $tree[] = $category;
+        }
+        return $tree;
     }
 }

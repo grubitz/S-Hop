@@ -1,3 +1,4 @@
 vendor/
 TODO.txt
 .env
+var/
