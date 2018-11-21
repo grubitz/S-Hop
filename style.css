@@ -1,13 +1,20 @@
-li > ul {
-    display: none;
-}
-a.arrow::before {
-    content: "🔽";
-  }
 ul {
     list-style: none;
 }
-a.arrow.expanded::before {
+
+li > ul {
+    display: none;
+}
+
+li.expanded > ul {
+    display: block;
+}
+
+a.arrow::before {
+    content: "🔽";
+}
+
+.expanded > a.arrow::before {
     content: "🔼";
   }
 

@@ -7,7 +7,11 @@
     <link href="/style.css" rel="stylesheet">
   </head>
   <body>
-    {{ Grubitz\ViewHelper::printTree($categoryTree) }}
+      @if (isset($selectedCategoryAncestry))
+        {{ Grubitz\ViewHelper::printTree($categoryTree, $selectedCategoryAncestry) }}
+      @else
+        {{ Grubitz\ViewHelper::printTree($categoryTree) }}
+      @endif
     @yield('content')
     <script
     src="https://code.jquery.com/jquery-3.3.1.min.js"

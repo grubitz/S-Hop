@@ -36,6 +36,24 @@ class Category
         return $statement->fetch();
     }
 
+    public static function getAncestorsAndSelfIds($categoryId)
+    {
+        $db = new Database();
+
+        $nextId = $categoryId;
+        $parentIds = [];
+
+        while (isset($nextId)) {
+            $parentIds[] = (int)$nextId;
+            $statement = $db->prepare("SELECT parent_category_id FROM categories WHERE id=:categoryId");
+            $statement->bindValue(':categoryId', $nextId);
+            $statement->execute();
+
+            $nextId = $statement->fetchColumn();
+        }
+        return $parentIds;
+    }
+
     private static function createTree(&$list, $parent)
     {
         $tree = [];

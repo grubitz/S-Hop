@@ -12,6 +12,7 @@ class CategoriesController extends ShopBaseController
         $categoryId = $this->routeInfo[1];
         $this->variables['products'] = Product::getProductsByCategoryId($categoryId);
         $this->variables['category'] = Category::getById($categoryId);
+        $this->variables['selectedCategoryAncestry'] = Category::getAncestorsAndSelfIds($categoryId);
 
         $this->render('category');
     }

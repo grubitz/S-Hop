@@ -4,15 +4,18 @@ namespace Grubitz;
 
 class ViewHelper
 {
-    public static function printTree($branch)
+    public static function printTree($categories, $expandedIds = [])
     {
         echo '<ul>';
-        foreach ($branch as $twig) {
-            echo '<li data-category-id="' . $twig['id'] . '">';
-            echo '<a class="category-toggle ' . (count($twig['children']) ? 'arrow' : 'diamond') . '"></a>';
-            echo "<a href='/c/{$twig['id']}'>{$twig['name']}</a>";
-            if (count($twig['children'])) {
-                self::printTree($twig['children']);
+        foreach ($categories as $category) {
+            echo "<li data-category-id='{$category['id']}'".(in_array($category['id'], $expandedIds) ? " class='expanded'" : "").">";
+            $classes = [];
+            $classes[] = 'category-toggle';
+            $classes[] = count($category['children']) ? 'arrow' : 'diamond';
+            echo '<a class="' . implode(' ', $classes) . '"></a>';
+            echo "<a href='/c/{$category['id']}'>{$category['name']}</a>";
+            if (count($category['children'])) {
+                self::printTree($category['children'], $expandedIds);
             }
             echo '</li>';
         }
