@@ -10,7 +10,7 @@
         @foreach ($products as $index => $product)
             <tr>
                 <td>{{ ($index+1) }}</td>
-                <td>{{ $product['name'] }}</td>
+                <td><a href="/p/{{ $product['id'] }}">{{ $product['name'] }}</a></td>
                 <td>${{ number_format($product['price'] / 100, 2) }}</td>
             </tr>
         @endforeach

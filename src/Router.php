@@ -9,6 +9,7 @@ class Router
 {
     private $routes = [
         '^/c/([1-9][0-9]*)$' => ['Categories', 'show'],
+        '^/p/([1-9][0-9]*)$' => ['Products', 'show'],
         '/' => ['Home', 'show']
     ];
 

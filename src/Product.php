@@ -14,4 +14,15 @@ class Product
 
         return $statement->fetchAll();
     }
+
+    public static function getById($productId)
+    {
+        $db = new Database();
+
+        $statement = $db->prepare("SELECT * FROM products WHERE id=:productId");
+        $statement->bindValue(':productId', $productId);
+        $statement->execute();
+
+        return $statement->fetch();
+    }
 }
