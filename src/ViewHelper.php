@@ -12,7 +12,7 @@ class ViewHelper
             echo '<a class="category-toggle ' . (count($twig['children']) ? 'arrow' : 'diamond') . '"></a>';
             echo "<a href='/c/{$twig['id']}'>{$twig['name']}</a>";
             if (count($twig['children'])) {
-                printTree($twig['children']);
+                self::printTree($twig['children']);
             }
             echo '</li>';
         }
