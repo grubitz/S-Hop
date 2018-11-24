@@ -7,8 +7,9 @@ class Category
     public static function getTree()
     {
         $db = new Database();
-
-        $result = $db->query("SELECT * FROM categories ORDER BY parent_category_id, name");
+        $query = "SELECT c.*, COUNT(p.id) AS product_count FROM products p JOIN categories c ON p.category_id = c.id
+                  GROUP BY p.category_id ORDER BY c.parent_category_id, c.name";
+        $result = $db->query($query);
 
         $categories = $result->fetchAll();
 
