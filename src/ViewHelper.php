@@ -8,6 +8,9 @@ class ViewHelper
     {
         echo '<ul>';
         foreach ($categories as $category) {
+            if (count($category['children']) == 0 && $category['product_count'] == 0) {
+                continue;
+            }
             echo "<li data-category-id='{$category['id']}'".(in_array($category['id'], $expandedIds) ? " class='expanded'" : "").">";
             $classes = [];
             $classes[] = 'category-toggle';
